@@ -1,0 +1,95 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Post {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String    @unique
+  title    String
+  body     String
+  comments Comment[]
+  author   User      @relation(fields: [authorId], references: [id])
+  authorId String    @db.ObjectId
+}
+
+model Comment {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  String @db.ObjectId
+  comment String
+}
+
+model User {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String?
+  posts Post[]
+}
+
+
+
+model Favorites {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  userId    String
+  productId String
+  title     String
+  price     Float
+  image     String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Cart {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  userId    String
+  productId String
+  title     String
+  price     Float
+  image     String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Orders {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  userId      String
+  orderNumber Int
+  productId   String
+  title       String
+  image       String
+  price       Float
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OrderNumber {
+  orderNumber String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model Shop {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String @unique
+  email  String
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+}
+
+model Store {
+  productId   String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  email       String
+  image       String
+  category    String
+  price       String
+  description String
+  userId      String
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+}
+
