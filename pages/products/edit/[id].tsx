@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 // }
 
 async function getItemHandler({params}){
-    const res = await fetch(`https://273-lab1.vercel.app/api/store/${params.id}`)
+    const res = await fetch(`http:localhost:3000/api/store/${params.id}`)
     const data = await res.json()
     return data
 }

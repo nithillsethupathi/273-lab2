@@ -13,7 +13,7 @@ export default async function getItembyId(
   const {pid} = req.query
   const fav = await prisma.store.findMany({
     where: {
-        productId: Number(pid)
+        productId: String(pid)
       },
     })
     res.json(fav)

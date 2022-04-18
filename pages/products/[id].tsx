@@ -9,7 +9,7 @@ import Link from "next/link";
 // }
 
 async function getItemHandler({params}){
-    const res = await fetch(`https://273-lab1.vercel.app/api/store/${params.id}`)
+    const res = await fetch(`http:localhost:3000/api/store/${params.id}`)
     const data = await res.json()
     return data
 }
@@ -43,7 +43,7 @@ const products = ({ item }) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                productId: String(item.id),
+                productId: String(item.productId),
                 title: String(item.title),
                 price: Number(item.price),
                 image: String(item.image),
@@ -61,7 +61,7 @@ const products = ({ item }) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                productId: String(item.id),
+                productId: String(item.productId),
                 title: String(item.title),
                 price: Number(item.price),
                 image: String(item.image),
